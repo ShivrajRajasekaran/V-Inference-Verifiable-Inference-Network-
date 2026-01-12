@@ -70,7 +70,7 @@ interface InferenceResult {
                 transaction_hash?: string;
                 block_number?: number;
                 explorer_url?: string;
-                gas_cost_eth?: number;
+                gas_cost_SHM?: number;
                 gas_cost_usd?: number;
             };
         };
@@ -328,7 +328,7 @@ function InferenceContent() {
             <div>
                 <h1 className="text-3xl font-bold mb-2">Run Inference</h1>
                 <p className="text-[var(--foreground-muted)]">
-                    Test your models with sample data and generate ZK proofs (anchored on Sepolia!)
+                    Test your models with sample data and generate ZK proofs (anchored on Shardeum!)
                 </p>
             </div>
 
@@ -403,7 +403,7 @@ function InferenceContent() {
                             <div>
                                 <div className="font-medium">Enable ZKML Verification</div>
                                 <div className="text-sm text-[var(--foreground-muted)]">
-                                    Generate ZK proof & anchor on Sepolia
+                                    Generate ZK proof & anchor on Shardeum
                                 </div>
                             </div>
                         </div>
@@ -451,7 +451,7 @@ function InferenceContent() {
                         {loading ? (
                             <>
                                 <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-                                Processing on Sepolia...
+                                Processing on Shardeum...
                             </>
                         ) : (
                             <>
@@ -508,7 +508,7 @@ function InferenceContent() {
                                 </pre>
                             </div>
 
-                            {/* ZK Proof with Real Sepolia TX */}
+                            {/* ZK Proof with Real Shardeum TX */}
                             {result.zkml && (
                                 <div className="p-4 rounded-xl bg-[var(--secondary-500)]/10 border border-[var(--secondary-500)]/30">
                                     <div className="flex items-center gap-2 mb-3">
@@ -531,12 +531,12 @@ function InferenceContent() {
                                             </span>
                                         </div>
 
-                                        {/* Real Sepolia Transaction */}
+                                        {/* Real Shardeum Transaction */}
                                         {result.zkml.proof?.on_chain?.anchored && (
                                             <>
                                                 <div className="border-t border-[var(--glass-border)] pt-2 mt-2">
                                                     <div className="text-xs font-semibold text-[var(--secondary-400)] mb-2">
-                                                        ⛓️ REAL SEPOLIA TRANSACTION
+                                                        ⛓️ REAL Shardeum TRANSACTION
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center justify-between">
@@ -558,7 +558,7 @@ function InferenceContent() {
                                                 <div className="flex items-center justify-between">
                                                     <span className="text-[var(--foreground-muted)]">Gas Cost</span>
                                                     <span>
-                                                        {result.zkml.proof.on_chain.gas_cost_eth?.toFixed(6)} ETH
+                                                        {result.zkml.proof.on_chain.gas_cost_SHM?.toFixed(6)} SHM
                                                         (~${result.zkml.proof.on_chain.gas_cost_usd?.toFixed(4)})
                                                     </span>
                                                 </div>
@@ -695,12 +695,12 @@ function InferenceContent() {
                                 </div>
                             )}
 
-                            {/* Sepolia Transaction Section */}
+                            {/* Shardeum Transaction Section */}
                             {selectedJob.proof_hash && (
                                 <>
                                     <div className="border-t border-[var(--glass-border)] pt-4">
                                         <div className="text-sm font-semibold text-[var(--secondary-400)] mb-3 flex items-center gap-2">
-                                            ⛓️ REAL SEPOLIA TRANSACTION
+                                            ⛓️ REAL Shardeum TRANSACTION
                                         </div>
                                     </div>
 
@@ -709,7 +709,7 @@ function InferenceContent() {
                                         <span className="text-[var(--foreground-muted)]">TX Hash</span>
                                         {selectedJob.transaction_hash ? (
                                             <a
-                                                href={`https://sepolia.etherscan.io/tx/${selectedJob.transaction_hash}`}
+                                                href={`https://Shardeum.SHMerscan.io/tx/${selectedJob.transaction_hash}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="font-mono text-xs text-[var(--primary-400)] hover:underline flex items-center gap-1"
@@ -731,7 +731,7 @@ function InferenceContent() {
                                     {/* Gas Cost */}
                                     <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--glass-bg)]">
                                         <span className="text-[var(--foreground-muted)]">Gas Cost</span>
-                                        <span>~0.0001 ETH (~$0.25)</span>
+                                        <span>~0.0001 SHM (~$0.25)</span>
                                     </div>
                                 </>
                             )}

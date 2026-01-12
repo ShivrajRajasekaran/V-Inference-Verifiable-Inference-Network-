@@ -121,7 +121,7 @@ async def get_platform_stats():
             "verification_rate": round(len(verified_jobs) / max(len(completed_jobs), 1) * 100, 2)
         },
         "network": {
-            "chain": "Base Sepolia",
+            "chain": "Base Shardeum",
             "verifier_contract": "0x742d35Cc6634C0532925a3b844Bc9e7595f00000",
             "escrow_contract": "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199"
         }

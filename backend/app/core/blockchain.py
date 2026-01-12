@@ -1,7 +1,7 @@
 """
 V-Inference Backend - Blockchain Integration
 Based on NeuralLex BlockchainConnector implementation
-Handles interaction with the Sepolia testnet smart contract
+Handles interaction with the Shardeum EVM testnet smart contract
 """
 from web3 import Web3
 from datetime import datetime
@@ -9,18 +9,19 @@ from typing import Dict, Any, Optional
 import hashlib
 
 from .config import (
-    SEPOLIA_RPC_URL,
+    SHARDEUM_RPC_URL,
     CHAIN_ID,
+    CHAIN_NAME,
     CONTRACT_ADDRESS,
     PRIVATE_KEY,
     CONTRACT_ABI,
-    SEPOLIA_EXPLORER
+    SHARDEUM_EXPLORER
 )
 
 
 class BlockchainService:
     """
-    Connects to Sepolia testnet and interacts with V-Inference smart contract
+    Connects to Shardeum EVM testnet and interacts with V-Inference smart contract
     
     Functions:
     - anchor_proof: Store proof hash on-chain
@@ -29,8 +30,9 @@ class BlockchainService:
     """
     
     def __init__(self):
-        self.w3 = Web3(Web3.HTTPProvider(SEPOLIA_RPC_URL))
+        self.w3 = Web3(Web3.HTTPProvider(SHARDEUM_RPC_URL))
         self.chain_id = CHAIN_ID
+        self.chain_name = CHAIN_NAME
         self.contract_address = CONTRACT_ADDRESS
         self.contract = None
         self.account = None
@@ -43,7 +45,7 @@ class BlockchainService:
         """Initialize Web3 connection and contract"""
         if self.w3.is_connected():
             self.connected = True
-            print(f"✅ Connected to Sepolia (Chain ID: {self.chain_id})")
+            print(f"✅ Connected to {self.chain_name} (Chain ID: {self.chain_id})")
             
             # Initialize contract
             if self.contract_address:
@@ -59,13 +61,13 @@ class BlockchainService:
                 
                 # Show balance
                 balance = self.get_balance()
-                print(f"💰 Account balance: {balance:.4f} ETH")
+                print(f"💰 Account balance: {balance:.4f} SHM")
         else:
-            print("❌ Failed to connect to Sepolia")
+            print(f"❌ Failed to connect to {self.chain_name}")
             self.connected = False
     
     def get_balance(self) -> float:
-        """Get wallet ETH balance"""
+        """Get wallet SHM balance"""
         if self.account:
             balance_wei = self.w3.eth.get_balance(self.account.address)
             return float(self.w3.from_wei(balance_wei, 'ether'))
@@ -172,7 +174,7 @@ class BlockchainService:
                 
                 gas_used = receipt['gasUsed']
                 gas_cost_wei = gas_used * gas_price
-                gas_cost_eth = float(self.w3.from_wei(gas_cost_wei, 'ether'))
+                gas_cost_shm = float(self.w3.from_wei(gas_cost_wei, 'ether'))
                 
                 print(f"✅ Transaction confirmed in block {receipt['blockNumber']}")
                 
@@ -181,11 +183,10 @@ class BlockchainService:
                     "transaction_hash": tx_hex,
                     "block_number": receipt['blockNumber'],
                     "gas_used": gas_used,
-                    "gas_cost_eth": gas_cost_eth,
-                    "gas_cost_usd": gas_cost_eth * 2500,  # Approximate ETH price
-                    "explorer_url": f"{SEPOLIA_EXPLORER}/tx/{tx_hex}",
+                    "gas_cost_shm": gas_cost_shm,
+                    "explorer_url": f"{SHARDEUM_EXPLORER}/tx/{tx_hex}",
                     "contract_address": self.contract_address,
-                    "chain": "Sepolia",
+                    "chain": self.chain_name,
                     "chain_id": self.chain_id,
                     "status": "CONFIRMED",
                     "simulated": False
@@ -197,7 +198,7 @@ class BlockchainService:
                 return {
                     "success": True,
                     "transaction_hash": tx_hex,
-                    "explorer_url": f"{SEPOLIA_EXPLORER}/tx/{tx_hex}",
+                    "explorer_url": f"{SHARDEUM_EXPLORER}/tx/{tx_hex}",
                     "status": "PENDING",
                     "simulated": False
                 }
@@ -313,27 +314,27 @@ class BlockchainService:
         if not self.connected:
             return {
                 "connected": False,
-                "chain": "Sepolia",
+                "chain": self.chain_name,
                 "status": "Disconnected"
             }
         
         try:
             return {
                 "connected": True,
-                "chain": "Sepolia",
+                "chain": self.chain_name,
                 "chain_id": self.chain_id,
-                "rpc_url": SEPOLIA_RPC_URL,
+                "rpc_url": SHARDEUM_RPC_URL,
                 "contract_address": self.contract_address,
                 "account_address": self.account.address if self.account else None,
-                "balance_eth": self.get_balance(),
+                "balance_shm": self.get_balance(),
                 "total_audits": self.get_total_audits(),
-                "explorer": SEPOLIA_EXPLORER,
+                "explorer": SHARDEUM_EXPLORER,
                 "status": "Connected"
             }
         except Exception as e:
             return {
                 "connected": False,
-                "chain": "Sepolia",
+                "chain": self.chain_name,
                 "status": f"Error: {e}"
             }
     

@@ -1,6 +1,6 @@
 """
 V-Inference Backend - Escrow Service
-Real ETH Escrow via VInferenceEscrow smart contract on Sepolia
+Real ETH Escrow via VInferenceEscrow smart contract on Shardeum
 Handles trustless payments between buyers and model providers
 """
 import os
@@ -10,11 +10,11 @@ from datetime import datetime
 from web3 import Web3
 
 from ..core.config import (
-    SEPOLIA_RPC_URL, 
+    SHARDEUM_RPC_URL, 
     CHAIN_ID, 
     PRIVATE_KEY,
     ESCROW_CONTRACT_ADDRESS,
-    SEPOLIA_EXPLORER
+    SHARDEUM_EXPLORER
 )
 
 # Escrow Contract ABI (key functions only)
@@ -120,16 +120,16 @@ class EscrowService:
         self._connect()
     
     def _connect(self):
-        """Connect to Sepolia and initialize escrow contract"""
+        """Connect to Shardeum and initialize escrow contract"""
         try:
-            if not SEPOLIA_RPC_URL:
+            if not SHARDEUM_RPC_URL:
                 print("⚠️ Escrow: No RPC URL configured")
                 return
             
-            self.w3 = Web3(Web3.HTTPProvider(SEPOLIA_RPC_URL))
+            self.w3 = Web3(Web3.HTTPProvider(SHARDEUM_RPC_URL))
             
             if not self.w3.is_connected():
-                print("⚠️ Escrow: Failed to connect to Sepolia")
+                print("⚠️ Escrow: Failed to connect to Shardeum")
                 return
             
             # Setup account

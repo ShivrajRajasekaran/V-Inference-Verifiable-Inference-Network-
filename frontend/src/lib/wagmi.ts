@@ -1,23 +1,72 @@
 "use client";
 
 import { createConfig, http } from "wagmi";
-import { sepolia } from "wagmi/chains";
+import { type Chain } from "wagmi/chains";
 import { injected } from "wagmi/connectors";
 
-// Sepolia configuration for V-Inference
+// Shardeum EVM Testnet Chain Definition
+export const shardeumTestnet: Chain = {
+    id: 8119,
+    name: "Shardeum EVM Testnet",
+    nativeCurrency: {
+        decimals: 18,
+        name: "Shardeum",
+        symbol: "SHM",
+    },
+    rpcUrls: {
+        default: { http: ["https://api-mezame.shardeum.org"] },
+    },
+    blockExplorers: {
+        default: { name: "Shardeum Explorer", url: "https://explorer-mezame.shardeum.org" },
+    },
+    testnet: true,
+};
+
+// Wagmi configuration - Shardeum Only
 export const config = createConfig({
-    chains: [sepolia],
+    chains: [shardeumTestnet],
     connectors: [
         injected(), // MetaMask and other injected wallets
     ],
     transports: {
-        [sepolia.id]: http("https://ethereum-sepolia-rpc.publicnode.com"),
+        [shardeumTestnet.id]: http("https://api-mezame.shardeum.org"),
     },
 });
 
-// Contract configuration
-export const CONTRACT_ADDRESS = "0x93a8451B29af5c7596Ee569305e7eEe5C1e8ac52" as `0x${string}`;
+// ============================================
+// SHARDEUM DEPLOYED CONTRACT ADDRESSES
+// ============================================
+export const SHARDEUM_CONTRACTS = {
+    MockUSDC: "0x0117A0EcF95dE28CCc0486D45D5362e020434575",
+    VInferenceAudit: "0xb3BD0a70eB7eAe91E6F23564d897C8098574e892",
+} as const;
 
+// Main contract address (VInferenceAudit for proof anchoring)
+export const CONTRACT_ADDRESS = SHARDEUM_CONTRACTS.VInferenceAudit as `0x${string}`;
+
+// ZKMLVerifier ABI
+export const ZKML_VERIFIER_ABI = [
+    {
+        inputs: [
+            { internalType: "bytes", name: "_proof", type: "bytes" },
+            { internalType: "bytes", name: "_publicInputs", type: "bytes" },
+            { internalType: "uint256", name: "_jobId", type: "uint256" },
+        ],
+        name: "verifyProof",
+        outputs: [{ internalType: "bool", name: "isValid", type: "bool" }],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [{ internalType: "bytes32", name: "_proofHash", type: "bytes32" }],
+        name: "isProofVerified",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        stateMutability: "view",
+        type: "function",
+    },
+] as const;
+
+// Contract ABI (audit functions)
 export const CONTRACT_ABI = [
     {
         inputs: [
@@ -71,15 +120,15 @@ export const CONTRACT_ABI = [
     },
 ] as const;
 
-// Sepolia chain info
-export const SEPOLIA_CHAIN_ID = 11155111;
-export const SEPOLIA_EXPLORER = "https://sepolia.etherscan.io";
+// Chain info - Shardeum Only
+export const SHARDEUM_CHAIN_ID = 8119;
+export const SHARDEUM_EXPLORER = "https://explorer-mezame.shardeum.org";
 
 // Helper to get explorer link
 export function getExplorerTxLink(txHash: string): string {
-    return `${SEPOLIA_EXPLORER}/tx/${txHash}`;
+    return `${SHARDEUM_EXPLORER}/tx/${txHash}`;
 }
 
 export function getExplorerAddressLink(address: string): string {
-    return `${SEPOLIA_EXPLORER}/address/${address}`;
+    return `${SHARDEUM_EXPLORER}/address/${address}`;
 }

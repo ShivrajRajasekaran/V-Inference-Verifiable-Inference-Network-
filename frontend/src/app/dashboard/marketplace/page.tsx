@@ -147,7 +147,7 @@ function ListingCard({
             <div className="flex items-center gap-2 p-3 rounded-lg bg-[var(--secondary-500)]/10 mb-4">
                 <ShieldIcon />
                 <span className="text-xs text-[var(--secondary-400)]">
-                    ZKML Verified • Proof anchored on Sepolia
+                    ZKML Verified • Proof anchored on Shardeum
                 </span>
             </div>
 
@@ -304,7 +304,7 @@ function PurchaseModal({
                         <div className="text-sm">
                             <p className="font-medium">ZKML Verified</p>
                             <p className="text-[var(--foreground-muted)]">
-                                All inferences are verified with ZK proofs anchored on Sepolia.
+                                All inferences are verified with ZK proofs anchored on Shardeum.
                             </p>
                         </div>
                     </div>
@@ -501,7 +501,7 @@ export default function MarketplacePage() {
                 <div>
                     <h1 className="text-3xl font-bold mb-2">Marketplace</h1>
                     <p className="text-[var(--foreground-muted)]">
-                        Buy verified AI inference from trusted providers • All proofs anchored on Sepolia
+                        Buy verified AI inference from trusted providers • All proofs anchored on Shardeum
                     </p>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--glass-bg)]">

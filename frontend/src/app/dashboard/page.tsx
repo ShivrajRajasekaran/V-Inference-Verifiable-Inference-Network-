@@ -402,7 +402,7 @@ export default function DashboardPage() {
                     <div className="flex items-center gap-3">
                         <div className="w-3 h-3 rounded-full bg-[var(--secondary-500)] animate-pulse"></div>
                         <div>
-                            <div className="font-medium">Sepolia Testnet</div>
+                            <div className="font-medium">Shardeum Testnet</div>
                             <div className="text-xs text-[var(--foreground-muted)]">
                                 On-Chain Verification Active
                             </div>

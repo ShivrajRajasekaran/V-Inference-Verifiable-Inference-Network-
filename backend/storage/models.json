@@ -230,8 +230,8 @@
       "sklearn_version": "1.4.2",
       "compatible": true
     },
-    "total_inferences": 2,
-    "average_latency_ms": 15029.21,
+    "total_inferences": 6,
+    "average_latency_ms": 23278.44,
     "created_at": "2026-01-08T12:00:00Z"
   },
   {
@@ -269,8 +269,8 @@
       ],
       "sklearn_version": "1.4.2"
     },
-    "total_inferences": 2,
-    "average_latency_ms": 15792.84,
+    "total_inferences": 3,
+    "average_latency_ms": 32163.41,
     "created_at": "2026-01-08T12:00:00Z"
   },
   {

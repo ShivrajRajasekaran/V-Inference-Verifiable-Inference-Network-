@@ -1,0 +1,86 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\admin\\Desktop\\NeuralLex\\Final\\vi\\deploy\\contracts\\VInference.sol": {
+      "lastModificationDate": 1768213936361,
+      "contentHash": "752a58872f6918d9942920152cb83486",
+      "sourceName": "contracts/VInference.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Context",
+        "IERC20",
+        "IZKMLVerifier",
+        "InferenceEscrow",
+        "InferenceMarketplace",
+        "MockUSDC",
+        "NodeRegistry",
+        "Ownable",
+        "ReentrancyGuard",
+        "ZKMLVerifier"
+      ]
+    },
+    "C:\\Users\\admin\\Desktop\\NeuralLex\\Final\\vi\\deploy\\contracts\\VInferenceAudit.sol": {
+      "lastModificationDate": 1768231462050,
+      "contentHash": "2b0c4e4b976d350744c0301558fc748c",
+      "sourceName": "contracts/VInferenceAudit.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "VInferenceAudit"
+      ]
+    }
+  }
+}

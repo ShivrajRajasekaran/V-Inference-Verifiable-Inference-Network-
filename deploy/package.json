@@ -1,0 +1,17 @@
+{
+    "name": "vinference-deploy",
+    "version": "1.0.0",
+    "description": "V-Inference Smart Contract Deployment",
+    "scripts": {
+        "compile": "npx hardhat compile",
+        "deploy:shardeum": "npx hardhat run scripts/deploy.js --network shardeum",
+        "deploy:sepolia": "npx hardhat run scripts/deploy.js --network sepolia"
+    },
+    "dependencies": {
+        "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+        "@openzeppelin/contracts": "^5.0.0",
+        "dotenv": "^16.3.1",
+        "ethers": "^6.9.0",
+        "hardhat": "^2.19.0"
+    }
+}

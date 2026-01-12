@@ -230,15 +230,15 @@ class ZKProofGenerator:
         return "0x" + clean_hash.ljust(64, '0')
     
     def _anchor_on_chain(self, job_id: str, proof_hash: str) -> Dict[str, Any]:
-        """Anchor proof on Sepolia blockchain"""
+        """Anchor proof on Shardeum blockchain"""
         if not self.blockchain.connected:
             return {
                 "anchored": False,
                 "error": "Blockchain not connected",
-                "chain": "Sepolia"
+                "chain": "Shardeum"
             }
         
-        print(f"⛓️ Anchoring proof for job {job_id} on Sepolia...")
+        print(f"⛓️ Anchoring proof for job {job_id} on Shardeum...")
         result = self.blockchain.anchor_proof(job_id, proof_hash)
         
         if result.get("success"):
@@ -252,7 +252,7 @@ class ZKProofGenerator:
                 "gas_cost_usd": result.get("gas_cost_usd"),
                 "explorer_url": result.get("explorer_url"),
                 "contract_address": result.get("contract_address"),
-                "chain": "Sepolia",
+                "chain": "Shardeum",
                 "chain_id": 11155111
             }
         else:
@@ -260,7 +260,7 @@ class ZKProofGenerator:
             return {
                 "anchored": False,
                 "error": result.get("error"),
-                "chain": "Sepolia"
+                "chain": "Shardeum"
             }
     
     def verify_proof(self, proof: Dict[str, Any]) -> Tuple[bool, str, Dict]:
@@ -327,7 +327,7 @@ class ZKProofGenerator:
                     "gas_price_gwei": float(gas_price_gwei),
                     "cost_eth": cost_eth,
                     "cost_usd": cost_usd,
-                    "chain": "Sepolia",
+                    "chain": "Shardeum",
                     "real_estimate": True
                 }
             except Exception as e:
@@ -338,7 +338,7 @@ class ZKProofGenerator:
             "gas_price_gwei": 20,
             "cost_eth": 0.002,
             "cost_usd": 5.0,
-            "chain": "Sepolia",
+            "chain": "Shardeum",
             "real_estimate": False
         }
 

@@ -1,6 +1,6 @@
 """
 V-Inference Backend - Configuration
-Real Sepolia Testnet Integration with IPFS Decentralized Storage
+Shardeum EVM Testnet Integration with IPFS Decentralized Storage
 """
 import os
 
@@ -35,15 +35,14 @@ IPFS_GATEWAYS = [
     "https://dweb.link/ipfs/"
 ]
 
-# Blockchain Configuration (Sepolia Testnet)
-SEPOLIA_RPC_URL = "https://ethereum-sepolia-rpc.publicnode.com"
-CHAIN_ID = 11155111  # Sepolia Chain ID
+# ============ Blockchain Configuration (Shardeum EVM Testnet) ============
+SHARDEUM_RPC_URL = "https://api-mezame.shardeum.org"
+CHAIN_ID = 8119  # Shardeum EVM Testnet Chain ID
+CHAIN_NAME = "Shardeum EVM Testnet"
 
-# Contract Address - Deployed on Sepolia
-CONTRACT_ADDRESS = "0x93a8451B29af5c7596Ee569305e7eEe5C1e8ac52"
-
-# Escrow Contract Address - Deployed on Sepolia (VInferenceEscrow)
-ESCROW_CONTRACT_ADDRESS = "0x705a74473F52024dCF54c1F6d78B4D4B4d8A2F73"
+# Contract Addresses - Deployed on Shardeum
+CONTRACT_ADDRESS = "0xb3BD0a70eB7eAe91E6F23564d897C8098574e892"  # VInferenceAudit - DEPLOYED!
+ESCROW_CONTRACT_ADDRESS = "0x0117A0EcF95dE28CCc0486D45D5362e020434575"  # MockUSDC
 
 # Private Key - For signing transactions
 # WARNING: In production, use environment variables!
@@ -207,5 +206,5 @@ CONTRACT_ABI = [
     }
 ]
 
-# Sepolia Block Explorer
-SEPOLIA_EXPLORER = "https://sepolia.etherscan.io"
+# Shardeum Block Explorer
+SHARDEUM_EXPLORER = "https://explorer-mezame.shardeum.org"

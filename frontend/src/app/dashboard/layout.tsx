@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAccount, useBalance, useConnect, useDisconnect } from "wagmi";
 import { formatEther } from "viem";
-import { SEPOLIA_CHAIN_ID, getExplorerAddressLink } from "@/lib/wagmi";
+import { SHARDEUM_CHAIN_ID, getExplorerAddressLink } from "@/lib/wagmi";
 
 // Icons
 const HomeIcon = () => (
@@ -75,7 +75,7 @@ function WalletButton() {
         setMounted(true);
     }, []);
 
-    const isWrongNetwork = chain && chain.id !== SEPOLIA_CHAIN_ID;
+    const isWrongNetwork = chain && chain.id !== SHARDEUM_CHAIN_ID;
 
     // Show loading state until mounted (prevents SSR mismatch)
     if (!mounted) {
@@ -90,7 +90,7 @@ function WalletButton() {
 
     if (isConnected && address) {
         const shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
-        const ethBalance = balance ? parseFloat(formatEther(balance.value)).toFixed(4) : "0.0000";
+        const SHMBalance = balance ? parseFloat(formatEther(balance.value)).toFixed(4) : "0.0000";
 
         return (
             <div className="p-4 rounded-2xl bg-[var(--glass-bg)] border border-[var(--glass-border)]">
@@ -116,7 +116,7 @@ function WalletButton() {
                 {/* Network Warning */}
                 {isWrongNetwork && (
                     <div className="p-2 mb-3 rounded-lg bg-yellow-500/20 text-yellow-400 text-xs">
-                        ⚠️ Switch to Sepolia network
+                        ⚠️ Switch to Shardeum EVM Testnet
                     </div>
                 )}
 
@@ -125,11 +125,11 @@ function WalletButton() {
                     <div className="flex items-center gap-2">
                         <WalletIcon />
                         <span className="text-[var(--secondary-400)] font-semibold">
-                            {ethBalance} ETH
+                            {SHMBalance} SHM
                         </span>
                     </div>
                     <span className="text-xs text-[var(--foreground-muted)]">
-                        Sepolia
+                        Shardeum
                     </span>
                 </div>
 
@@ -164,7 +164,7 @@ function WalletButton() {
                 )}
             </button>
             <p className="text-xs text-[var(--foreground-muted)] text-center mt-2">
-                Connect to Sepolia testnet
+                Connect to Shardeum testnet
             </p>
         </div>
     );

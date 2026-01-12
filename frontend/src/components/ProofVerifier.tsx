@@ -73,7 +73,7 @@ export function ProofVerifier({ jobId, proofHash, txHash }: ProofVerifierProps) 
                     <span className="font-medium">Not on-chain</span>
                 </div>
                 <p className="text-sm text-[var(--foreground-muted)] mt-1">
-                    This proof has not been anchored to Sepolia yet.
+                    This proof has not been anchored to Shardeum yet.
                 </p>
             </div>
         );
@@ -133,7 +133,7 @@ export function ProofVerifier({ jobId, proofHash, txHash }: ProofVerifierProps) 
                         rel="noopener noreferrer"
                         className="flex items-center gap-1 text-[var(--primary-400)] hover:underline mt-2"
                     >
-                        View on Etherscan
+                        View on SHMerscan
                         <ExternalLinkIcon />
                     </a>
                 )}
@@ -150,7 +150,7 @@ export function TxHashVerifier({ txHash }: { txHash: string }) {
     } | null>(null);
 
     // This would query the blockchain for the TX
-    // For now, show link to Etherscan
+    // For now, show link to SHMerscan
     return (
         <div className="p-4 rounded-xl bg-[var(--glass-bg)]">
             <div className="flex items-center justify-between">
@@ -166,7 +166,7 @@ export function TxHashVerifier({ txHash }: { txHash: string }) {
                 </a>
             </div>
             <p className="text-xs text-[var(--foreground-muted)] mt-2">
-                Click to verify on Sepolia Etherscan
+                Click to verify on Shardeum SHMerscan
             </p>
         </div>
     );

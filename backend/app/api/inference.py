@@ -1,9 +1,9 @@
 """
 V-Inference Backend - Inference API
-Endpoints for running AI inference with ZKML verification and Sepolia anchoring
+Endpoints for running AI inference with ZKML verification and Shardeum anchoring
 
 DECENTRALIZATION FEATURES:
-1. On-chain proof anchoring (Sepolia blockchain)
+1. On-chain proof anchoring (Shardeum blockchain)
 2. On-chain proof verification (trustless)
 3. Integration with decentralized escrow
 """
@@ -29,7 +29,7 @@ async def run_inference(request: InferenceInput):
     1. Validate model exists and user has access
     2. Execute model inference
     3. Generate ZK proof (if enabled)
-    4. Anchor proof on Sepolia (if ZKML enabled)
+    4. Anchor proof on Shardeum (if ZKML enabled)
     5. Verify proof
     6. Return results with TX hash
     """
@@ -91,7 +91,7 @@ async def run_inference(request: InferenceInput):
                         "verification": {
                             "is_valid": False,
                             "message": "❌ NOT VERIFIED - Computation failed integrity check",
-                            "gas_estimate": {"cost_usd": 0, "chain": "Sepolia"}
+                            "gas_estimate": {"cost_usd": 0, "chain": "Shardeum"}
                         }
                     }
                 }
@@ -275,7 +275,7 @@ async def verify_proof(job_id: str, verify_on_chain: bool = True):
             "gas_estimate": gas_estimate,
             "on_chain": {
                 "anchored": on_chain_info.get("anchored", False),
-                "chain": "Sepolia",
+                "chain": "Shardeum",
                 "chain_id": 11155111,
                 "contract_address": on_chain_info.get("contract_address"),
                 "transaction_hash": on_chain_info.get("transaction_hash"),
@@ -334,7 +334,7 @@ async def verify_on_chain_only(job_id: str):
             "block_number": result.get("block_number"),
             "auditor": result.get("auditor"),
             "explorer_url": result.get("explorer_url"),
-            "chain": "Sepolia",
+            "chain": "Shardeum",
             "trustless": not result.get("simulated", True),
             "simulated": result.get("simulated", False)
         }
@@ -344,7 +344,7 @@ async def verify_on_chain_only(job_id: str):
 @router.get("/blockchain-status", response_model=APIResponse)
 async def get_blockchain_status():
     """
-    Get Sepolia blockchain connection status.
+    Get Shardeum blockchain connection status.
     """
     status = inference_engine.zkml.get_network_status()
     

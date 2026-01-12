@@ -8,12 +8,12 @@ from datetime import datetime
 from web3 import Web3
 
 from ..core.config import (
-    SEPOLIA_RPC_URL,
+    SHARDEUM_RPC_URL,
     CHAIN_ID,
     CONTRACT_ADDRESS,
     PRIVATE_KEY,
     CONTRACT_ABI,
-    SEPOLIA_EXPLORER
+    SHARDEUM_EXPLORER
 )
 
 
@@ -95,14 +95,14 @@ class OnChainVerifier:
     def _connect(self):
         """Initialize Web3 connection"""
         try:
-            self.w3 = Web3(Web3.HTTPProvider(SEPOLIA_RPC_URL))
+            self.w3 = Web3(Web3.HTTPProvider(SHARDEUM_RPC_URL))
             
             if not self.w3.is_connected():
-                print("⚠️ OnChainVerifier: Failed to connect to Sepolia")
+                print("⚠️ OnChainVerifier: Failed to connect to Shardeum")
                 return
             
             self.connected = True
-            print(f"✅ OnChainVerifier connected to Sepolia (Chain ID: {CHAIN_ID})")
+            print(f"✅ OnChainVerifier connected to Shardeum (Chain ID: {CHAIN_ID})")
             
             # Initialize contract
             if CONTRACT_ADDRESS:
@@ -233,9 +233,9 @@ class OnChainVerifier:
                 "gas_used": gas_used,
                 "gas_cost_eth": gas_cost_eth,
                 "gas_cost_usd": gas_cost_eth * 2500,  # Approximate
-                "explorer_url": f"{SEPOLIA_EXPLORER}/tx/{tx_hex}",
+                "explorer_url": f"{SHARDEUM_EXPLORER}/tx/{tx_hex}",
                 "contract_address": CONTRACT_ADDRESS,
-                "chain": "Sepolia",
+                "chain": "Shardeum",
                 "chain_id": CHAIN_ID,
                 "simulated": False
             }
@@ -303,8 +303,8 @@ class OnChainVerifier:
                 "timestamp": audit.get("timestamp"),
                 "auditor": audit.get("auditor"),
                 "message": "✅ Proof verified on-chain" if verified else "❌ Hash mismatch",
-                "explorer_url": f"{SEPOLIA_EXPLORER}/address/{CONTRACT_ADDRESS}",
-                "chain": "Sepolia",
+                "explorer_url": f"{SHARDEUM_EXPLORER}/address/{CONTRACT_ADDRESS}",
+                "chain": "Shardeum",
                 "simulated": False
             }
             
@@ -352,12 +352,12 @@ class OnChainVerifier:
         """Get verifier service status"""
         return {
             "connected": self.connected,
-            "chain": "Sepolia",
+            "chain": "Shardeum",
             "chain_id": CHAIN_ID,
             "contract_address": CONTRACT_ADDRESS,
-            "rpc_url": SEPOLIA_RPC_URL,
+            "rpc_url": SHARDEUM_RPC_URL,
             "account": self.account.address if self.account else None,
-            "explorer": SEPOLIA_EXPLORER
+            "explorer": SHARDEUM_EXPLORER
         }
     
     # ============ Simulation Functions ============
@@ -375,9 +375,9 @@ class OnChainVerifier:
             "gas_used": 85000,
             "gas_cost_eth": 0.0017,
             "gas_cost_usd": 4.25,
-            "explorer_url": f"{SEPOLIA_EXPLORER}/tx/{fake_tx}",
+            "explorer_url": f"{SHARDEUM_EXPLORER}/tx/{fake_tx}",
             "contract_address": CONTRACT_ADDRESS,
-            "chain": "Sepolia",
+            "chain": "Shardeum",
             "chain_id": CHAIN_ID,
             "simulated": True,
             "note": "Blockchain connection unavailable - simulating anchor"
@@ -392,7 +392,7 @@ class OnChainVerifier:
             "provided_hash": proof_hash,
             "on_chain_hash": proof_hash if verified else "0x0000...different",
             "message": "✅ Proof verified (simulated)" if verified else "❌ Verification failed (simulated)",
-            "chain": "Sepolia",
+            "chain": "Shardeum",
             "simulated": True,
             "note": "Blockchain connection unavailable - simulating verification"
         }
