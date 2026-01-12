@@ -14,10 +14,10 @@ from datetime import datetime
 try:
     import ezkl
     EZKL_AVAILABLE = True
-    print("✅ EZKL loaded - Real ZK proofs available")
+    print("[SUCCESS] EZKL loaded - Real ZK proofs available")
 except ImportError:
     EZKL_AVAILABLE = False
-    print("⚠️ EZKL not installed - Using simulated proofs")
+    print("[WARNING] EZKL not installed - Using simulated proofs")
 
 # Try to import ONNX for model conversion
 try:
@@ -86,7 +86,7 @@ class EZKLService:
             }
         
         try:
-            print(f"🔧 Setting up ZK circuit for model {model_id}...")
+            print(f"[INFO] Setting up ZK circuit for model {model_id}...")
             
             # Step 1: Generate settings
             print("  1. Generating circuit settings...")
@@ -123,7 +123,7 @@ class EZKLService:
             )
             
             self.setup_complete[model_id] = True
-            print(f"✅ Circuit setup complete for {model_id}")
+            print(f"[SUCCESS] Circuit setup complete for {model_id}")
             
             return {
                 "success": True,
@@ -134,7 +134,7 @@ class EZKLService:
             }
             
         except Exception as e:
-            print(f"❌ Circuit setup failed: {e}")
+            print(f"[ERROR] Circuit setup failed: {e}")
             import traceback
             traceback.print_exc()
             return {
@@ -173,7 +173,7 @@ class EZKLService:
             srs_path = str(artifacts_path / "kzg.srs")
             
             # Step 1: Create input JSON file for witness generation
-            print("🔐 Generating ZK proof...")
+            print("[INFO] Generating ZK proof...")
             input_file = str(artifacts_path / "input.json")
             
             # Format input for EZKL
@@ -217,7 +217,7 @@ class EZKLService:
                 srs_path
             )
             
-            print(f"✅ Proof generated in {prove_time:.2f}s, Valid: {is_valid}")
+            print(f"[SUCCESS] Proof generated in {prove_time:.2f}s, Valid: {is_valid}")
             
             return {
                 "success": True,
@@ -235,7 +235,7 @@ class EZKLService:
             }
             
         except Exception as e:
-            print(f"❌ Proof generation failed: {e}")
+            print(f"[ERROR] Proof generation failed: {e}")
             import traceback
             traceback.print_exc()
             return self._fallback_proof(model_id, input_data, output_data)

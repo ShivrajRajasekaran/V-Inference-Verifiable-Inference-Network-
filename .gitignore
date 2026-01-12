@@ -13,14 +13,35 @@ out/
 build/
 dist/
 
-# System
+
+# IDEs
+.vscode/
+.idea/
+
+# Backend
+backend/storage/*.json
+backend/storage/*.db
+backend/__pycache__/
+*.log
+
+# Frontend
+.next/
+node_modules/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Worker
+worker/__pycache__/
+worker/storage/
+
+# Deployment
+deploy/artifacts/
+deploy/cache/
+deploy/node_modules/
+
+# OS
 .DS_Store
 Thumbs.db
-
-# Storage / Artifacts
-backend/storage/ezkl_artifacts/
-*.srs
-*.pk
-*.vk
-*.compiled
 

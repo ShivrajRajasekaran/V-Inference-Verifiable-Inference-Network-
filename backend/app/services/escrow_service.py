@@ -123,13 +123,13 @@ class EscrowService:
         """Connect to Shardeum and initialize escrow contract"""
         try:
             if not SHARDEUM_RPC_URL:
-                print("⚠️ Escrow: No RPC URL configured")
+                print("[WARNING] Escrow: No RPC URL configured")
                 return
             
             self.w3 = Web3(Web3.HTTPProvider(SHARDEUM_RPC_URL))
             
             if not self.w3.is_connected():
-                print("⚠️ Escrow: Failed to connect to Shardeum")
+                print("[ERROR] Escrow: Failed to connect to Shardeum")
                 return
             
             # Setup account
@@ -137,7 +137,7 @@ class EscrowService:
                 self.account = self.w3.eth.account.from_key(PRIVATE_KEY)
                 balance = self.w3.eth.get_balance(self.account.address)
                 balance_eth = float(self.w3.from_wei(balance, 'ether'))
-                print(f"💰 Escrow account: {self.account.address} ({balance_eth:.4f} ETH)")
+                print(f"[INFO] Escrow account: {self.account.address} ({balance_eth:.4f} ETH)")
             
             # Setup contract if address is configured
             if self.contract_address:
@@ -145,14 +145,14 @@ class EscrowService:
                     address=Web3.to_checksum_address(self.contract_address),
                     abi=ESCROW_ABI
                 )
-                print(f"✅ Escrow contract connected: {self.contract_address}")
+                print(f"[SUCCESS] Escrow contract connected: {self.contract_address}")
                 self.connected = True
             else:
-                print("⚠️ Escrow: Contract address not set")
+                print("[WARNING] Escrow: Contract address not set")
                 self.connected = False
             
         except Exception as e:
-            print(f"❌ Escrow connection error: {e}")
+            print(f"[ERROR] Escrow connection error: {e}")
             self.connected = False
     
     def job_id_to_bytes32(self, job_id: str) -> bytes:
@@ -217,7 +217,7 @@ class EscrowService:
             }
             
         except Exception as e:
-            print(f"❌ Create escrow failed: {e}")
+            print(f"[ERROR] Create escrow failed: {e}")
             return self._simulated_escrow_create(job_id, provider_address, amount_eth)
     
     async def release_escrow(
@@ -269,7 +269,7 @@ class EscrowService:
             }
             
         except Exception as e:
-            print(f"❌ Release escrow failed: {e}")
+            print(f"[ERROR] Release escrow failed: {e}")
             return self._simulated_escrow_release(job_id, proof_hash)
     
     async def refund_escrow(
@@ -316,7 +316,7 @@ class EscrowService:
             }
             
         except Exception as e:
-            print(f"❌ Refund escrow failed: {e}")
+            print(f"[ERROR] Refund escrow failed: {e}")
             return self._simulated_escrow_refund(job_id, reason)
     
     async def get_escrow(self, job_id: str) -> Optional[Dict[str, Any]]:
@@ -340,7 +340,7 @@ class EscrowService:
             }
             
         except Exception as e:
-            print(f"❌ Get escrow failed: {e}")
+            print(f"[ERROR] Get escrow failed: {e}")
             return None
     
     # ============ Simulated Functions (Fallback) ============

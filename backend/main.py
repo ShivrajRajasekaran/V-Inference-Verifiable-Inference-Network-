@@ -13,19 +13,19 @@ from app.api import models, inference, marketplace, users
 async def lifespan(app: FastAPI):
     """Application lifespan events"""
     # Startup
-    print("🚀 V-Inference Backend Starting...")
-    print("📦 Initializing storage...")
-    print("⚡ ZKML Simulator ready")
+    print("[STARTING] V-Inference Backend Starting...")
+    print("[INFO] Initializing storage...")
+    print("[SUCCESS] ZKML Simulator ready")
     
     # Seed demo data for presentation
     from app.core.database import db
     from app.core.demo_data import seed_demo_data
     seed_demo_data(db)
     
-    print("✅ Backend ready to accept connections")
+    print("[SUCCESS] Backend ready to accept connections")
     yield
     # Shutdown
-    print("👋 V-Inference Backend shutting down...")
+    print("[STOPPING] V-Inference Backend shutting down...")
 
 
 app = FastAPI(

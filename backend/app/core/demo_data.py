@@ -101,7 +101,7 @@ def seed_demo_data(db):
     
     # ============= DEMO JOBS (MIX OF VERIFIED AND UNVERIFIED) =============
     demo_jobs = [
-        # ✅ VERIFIED JOBS (have proof hash, verified status)
+        # [VERIFIED] VERIFIED JOBS (have proof hash, verified status)
         {
             "id": "job-verified-001",
             "model_id": "model-sentiment-001",
@@ -142,7 +142,7 @@ def seed_demo_data(db):
             "completed_at": (datetime.utcnow() - timedelta(hours=8)).isoformat() + "Z"
         },
         
-        # ❌ NOT VERIFIED / PENDING JOBS
+        # [NOT VERIFIED] NOT VERIFIED / PENDING JOBS
         {
             "id": "job-pending-001",
             "model_id": "model-sentiment-001",
@@ -340,10 +340,10 @@ def seed_demo_data(db):
     db._write_file(db.jobs_file, existing_jobs)
     db._write_file(db.listings_file, existing_listings)
     
-    print("✅ Demo data seeded successfully!")
-    print(f"   📦 {added_models} new models added")
-    print(f"   ⚡ {added_jobs} new jobs (5 verified ✅, 5 not verified ❌)")
-    print(f"   🛒 {added_listings} new marketplace listings")
+    print("[SUCCESS] Demo data seeded successfully!")
+    print(f"   [INFO] {added_models} new models added")
+    print(f"   [INFO] {added_jobs} new jobs (5 verified, 5 not verified)")
+    print(f"   [INFO] {added_listings} new marketplace listings")
     
     return {
         "models_added": added_models,

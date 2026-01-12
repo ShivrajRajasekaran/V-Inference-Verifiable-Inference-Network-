@@ -58,23 +58,23 @@ class IPFSService:
         if self.provider == "pinata":
             if PINATA_API_KEY and PINATA_SECRET_KEY:
                 self.connected = True
-                print(f"✅ IPFS Service connected via Pinata")
+                print(f"[SUCCESS] IPFS Service connected via Pinata")
             else:
-                print("⚠️ IPFS: Pinata API keys not configured - using simulation mode")
+                print("[WARNING] IPFS: Pinata API keys not configured - using simulation mode")
                 self.connected = False
         elif self.provider == "infura":
             if INFURA_PROJECT_ID and INFURA_PROJECT_SECRET:
                 self.connected = True
-                print(f"✅ IPFS Service connected via Infura")
+                print(f"[SUCCESS] IPFS Service connected via Infura")
             else:
-                print("⚠️ IPFS: Infura credentials not configured - using simulation mode")
+                print("[WARNING] IPFS: Infura credentials not configured - using simulation mode")
                 self.connected = False
         elif self.provider == "local":
             # Will check connection when actually used
             self.connected = True
-            print(f"✅ IPFS Service configured for local node at {LOCAL_IPFS_API}")
+            print(f"[SUCCESS] IPFS Service configured for local node at {LOCAL_IPFS_API}")
         else:
-            print(f"⚠️ IPFS: Unknown provider '{self.provider}' - using simulation mode")
+            print(f"[WARNING] IPFS: Unknown provider '{self.provider}' - using simulation mode")
             self.connected = False
     
     def generate_local_cid(self, file_path: str) -> str:

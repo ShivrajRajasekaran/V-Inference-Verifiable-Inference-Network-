@@ -19,34 +19,34 @@ from ..core.database import db
 # Try to import EZKL service for real ZK proofs
 try:
     from .ezkl_service import ezkl_service, EZKL_AVAILABLE
-    print(f"✅ EZKL service loaded - Real ZK proofs: {EZKL_AVAILABLE}")
+    print(f"[SUCCESS] EZKL service loaded - Real ZK proofs: {EZKL_AVAILABLE}")
 except ImportError:
     EZKL_AVAILABLE = False
     ezkl_service = None
-    print("⚠️ EZKL service not available - Using hash-based proofs")
+    print("[WARNING] EZKL service not available - Using hash-based proofs")
 
 # Try to import transformers for real sentiment analysis
 try:
     from transformers import pipeline
     TRANSFORMERS_AVAILABLE = True
-    print("✅ Transformers loaded - Real sentiment analysis available")
+    print("[SUCCESS] Transformers loaded - Real sentiment analysis available")
 except ImportError:
     TRANSFORMERS_AVAILABLE = False
-    print("⚠️ Transformers not installed - Using simulated outputs for NLP")
+    print("[WARNING] Transformers not installed - Using simulated outputs for NLP")
 
 # Try to import joblib for loading PKL models
 try:
     import joblib
     JOBLIB_AVAILABLE = True
-    print("✅ Joblib loaded - PKL model inference available")
+    print("[SUCCESS] Joblib loaded - PKL model inference available")
 except ImportError:
     try:
         import pickle
         JOBLIB_AVAILABLE = True  # Will use pickle as fallback
-        print("✅ Pickle loaded - PKL model inference available")
+        print("[SUCCESS] Pickle loaded - PKL model inference available")
     except ImportError:
         JOBLIB_AVAILABLE = False
-        print("⚠️ Joblib/Pickle not installed - Using simulated outputs for PKL models")
+        print("[WARNING] Joblib/Pickle not installed - Using simulated outputs for PKL models")
 
 # Try to import numpy for array handling
 try:
@@ -60,10 +60,10 @@ except ImportError:
 try:
     import onnxruntime as ort
     ONNX_AVAILABLE = True
-    print("✅ ONNX Runtime loaded - ONNX model inference available")
+    print("[SUCCESS] ONNX Runtime loaded - ONNX model inference available")
 except ImportError:
     ONNX_AVAILABLE = False
-    print("⚠️ ONNX Runtime not installed - Using simulated outputs for ONNX models")
+    print("[WARNING] ONNX Runtime not installed - Using simulated outputs for ONNX models")
 
 # Global sentiment analyzer (lazy loaded)
 _sentiment_analyzer = None
@@ -76,13 +76,13 @@ def get_sentiment_analyzer():
     """Lazy load the sentiment analysis model"""
     global _sentiment_analyzer
     if _sentiment_analyzer is None and TRANSFORMERS_AVAILABLE:
-        print("🔄 Loading sentiment analysis model...")
+        print("[INFO] Loading sentiment analysis model...")
         _sentiment_analyzer = pipeline(
             "sentiment-analysis",
             model="distilbert-base-uncased-finetuned-sst-2-english",
             device=-1  # CPU
         )
-        print("✅ Sentiment model loaded!")
+        print("[SUCCESS] Sentiment model loaded!")
     return _sentiment_analyzer
 
 
@@ -94,11 +94,11 @@ def load_pkl_model(file_path: str):
         return _model_cache[file_path]
     
     if not os.path.exists(file_path):
-        print(f"⚠️ Model file not found: {file_path}")
+        print(f"[WARNING] Model file not found: {file_path}")
         return None
     
     try:
-        print(f"🔄 Loading model from {file_path}...")
+        print(f"[INFO] Loading model from {file_path}...")
         
         # Suppress sklearn version warnings
         import warnings
@@ -117,10 +117,10 @@ def load_pkl_model(file_path: str):
                 model = pickle.load(f)
         
         _model_cache[file_path] = model
-        print(f"✅ Model loaded successfully!")
+        print(f"[SUCCESS] Model loaded successfully!")
         return model
     except Exception as e:
-        print(f"❌ Error loading model: {e}")
+        print(f"[ERROR] Error loading model: {e}")
         import traceback
         traceback.print_exc()
         return None
@@ -238,11 +238,11 @@ class ZKProofGenerator:
                 "chain": "Shardeum"
             }
         
-        print(f"⛓️ Anchoring proof for job {job_id} on Shardeum...")
+        print(f"[INFO] Anchoring proof for job {job_id} on Shardeum...")
         result = self.blockchain.anchor_proof(job_id, proof_hash)
         
         if result.get("success"):
-            print(f"✅ Proof anchored! TX: {result.get('transaction_hash')}")
+            print(f"[SUCCESS] Proof anchored! TX: {result.get('transaction_hash')}")
             return {
                 "anchored": True,
                 "transaction_hash": result.get("transaction_hash"),
@@ -256,7 +256,7 @@ class ZKProofGenerator:
                 "chain_id": 11155111
             }
         else:
-            print(f"⚠️ Anchoring failed: {result.get('error')}")
+            print(f"[WARNING] Anchoring failed: {result.get('error')}")
             return {
                 "anchored": False,
                 "error": result.get("error"),
@@ -524,11 +524,11 @@ class InferenceEngine:
                     for i, p in enumerate(probabilities)
                 }
             
-            print(f"✅ Real inference: {predicted_class} (confidence: {result['confidence']})")
+            print(f"[SUCCESS] Real inference: {predicted_class} (confidence: {result['confidence']})")
             return result
             
         except Exception as e:
-            print(f"❌ PKL inference error: {e}")
+            print(f"[ERROR] PKL inference error: {e}")
             import traceback
             traceback.print_exc()
             return {
@@ -630,11 +630,11 @@ class InferenceEngine:
                     str(i): round(float(p), 4) for i, p in enumerate(probabilities)
                 }
                 
-            print(f"✅ ONNX Inference: {predicted_class} (conf: {result['confidence']})")
+            print(f"[SUCCESS] ONNX Inference: {predicted_class} (conf: {result['confidence']})")
             return result
             
         except Exception as e:
-            print(f"❌ ONNX Job failed: {e}")
+            print(f"[ERROR] ONNX Job failed: {e}")
             import traceback
             traceback.print_exc()
             

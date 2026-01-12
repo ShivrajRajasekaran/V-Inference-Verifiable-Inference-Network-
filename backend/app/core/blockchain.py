@@ -45,7 +45,7 @@ class BlockchainService:
         """Initialize Web3 connection and contract"""
         if self.w3.is_connected():
             self.connected = True
-            print(f"✅ Connected to {self.chain_name} (Chain ID: {self.chain_id})")
+            print(f"[SUCCESS] Connected to {self.chain_name} (Chain ID: {self.chain_id})")
             
             # Initialize contract
             if self.contract_address:
@@ -57,13 +57,13 @@ class BlockchainService:
             # Initialize account if private key available
             if PRIVATE_KEY:
                 self.account = self.w3.eth.account.from_key(PRIVATE_KEY)
-                print(f"📝 Using account: {self.account.address}")
+                print(f"[INFO] Using account: {self.account.address}")
                 
                 # Show balance
                 balance = self.get_balance()
-                print(f"💰 Account balance: {balance:.4f} SHM")
+                print(f"[INFO] Account balance: {balance:.4f} SHM")
         else:
-            print(f"❌ Failed to connect to {self.chain_name}")
+            print(f"[ERROR] Failed to connect to {self.chain_name}")
             self.connected = False
     
     def get_balance(self) -> float:
@@ -111,7 +111,7 @@ class BlockchainService:
             try:
                 exists = self.contract.functions.auditExists(job_id).call()
                 if exists:
-                    print(f"⚠️ Audit {job_id} already exists on-chain, skipping anchor")
+                    print(f"[WARNING] Audit {job_id} already exists on-chain, skipping anchor")
                     # Get existing audit info
                     audit = self.get_audit(job_id)
                     return {
@@ -142,7 +142,7 @@ class BlockchainService:
             # Convert to bytes32 for contract call
             proof_bytes32 = bytes.fromhex(clean_hash)
             
-            print(f"⛓️ Anchoring proof for job {job_id}...")
+            print(f"[INFO] Anchoring proof for job {job_id}...")
             print(f"   Proof: 0x{clean_hash[:16]}...")
             
             # Get gas price
@@ -166,7 +166,7 @@ class BlockchainService:
             tx_hash = self.w3.eth.send_raw_transaction(signed_tx.raw_transaction)
             tx_hex = self.w3.to_hex(tx_hash)
             
-            print(f"📤 Transaction sent: {tx_hex}")
+            print(f"[INFO] Transaction sent: {tx_hex}")
             
             # Wait for receipt (with timeout)
             try:
@@ -176,7 +176,7 @@ class BlockchainService:
                 gas_cost_wei = gas_used * gas_price
                 gas_cost_shm = float(self.w3.from_wei(gas_cost_wei, 'ether'))
                 
-                print(f"✅ Transaction confirmed in block {receipt['blockNumber']}")
+                print(f"[SUCCESS] Transaction confirmed in block {receipt['blockNumber']}")
                 
                 return {
                     "success": True,
@@ -194,7 +194,7 @@ class BlockchainService:
                 
             except Exception as wait_error:
                 # Transaction sent but not yet confirmed
-                print(f"⏳ Transaction pending: {wait_error}")
+                print(f"[PENDING] Transaction pending: {wait_error}")
                 return {
                     "success": True,
                     "transaction_hash": tx_hex,
@@ -205,7 +205,7 @@ class BlockchainService:
             
         except Exception as e:
             error_msg = str(e)
-            print(f"❌ Blockchain error: {error_msg}")
+            print(f"[ERROR] Blockchain error: {error_msg}")
             
             # Return error with simulated fallback
             return {

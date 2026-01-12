@@ -98,11 +98,11 @@ class OnChainVerifier:
             self.w3 = Web3(Web3.HTTPProvider(SHARDEUM_RPC_URL))
             
             if not self.w3.is_connected():
-                print("⚠️ OnChainVerifier: Failed to connect to Shardeum")
+                print("[ERROR] OnChainVerifier: Failed to connect to Shardeum")
                 return
             
             self.connected = True
-            print(f"✅ OnChainVerifier connected to Shardeum (Chain ID: {CHAIN_ID})")
+            print(f"[SUCCESS] OnChainVerifier connected to Shardeum (Chain ID: {CHAIN_ID})")
             
             # Initialize contract
             if CONTRACT_ADDRESS:
@@ -110,17 +110,17 @@ class OnChainVerifier:
                     address=Web3.to_checksum_address(CONTRACT_ADDRESS),
                     abi=VERIFIER_ABI
                 )
-                print(f"📝 Verifier contract: {CONTRACT_ADDRESS}")
+                print(f"[INFO] Verifier contract: {CONTRACT_ADDRESS}")
             
             # Initialize account
             if PRIVATE_KEY:
                 self.account = self.w3.eth.account.from_key(PRIVATE_KEY)
                 balance = self.w3.eth.get_balance(self.account.address)
                 balance_eth = self.w3.from_wei(balance, 'ether')
-                print(f"💰 Verifier account: {self.account.address} ({balance_eth:.4f} ETH)")
+                print(f"[INFO] Verifier account: {self.account.address} ({balance_eth:.4f} ETH)")
                 
         except Exception as e:
-            print(f"❌ OnChainVerifier connection error: {e}")
+            print(f"[ERROR] OnChainVerifier connection error: {e}")
             self.connected = False
     
     def hash_to_bytes32(self, hash_string: str) -> bytes:
@@ -195,7 +195,7 @@ class OnChainVerifier:
             # Get gas price
             gas_price = self.w3.eth.gas_price
             
-            print(f"⛓️ Anchoring proof for job {job_id}...")
+            print(f"[INFO] Anchoring proof for job {job_id}...")
             
             # Build transaction
             tx = self.contract.functions.anchorAudit(
@@ -213,7 +213,7 @@ class OnChainVerifier:
             tx_hash = self.w3.eth.send_raw_transaction(signed_tx.raw_transaction)
             tx_hex = self.w3.to_hex(tx_hash)
             
-            print(f"📤 Anchor TX sent: {tx_hex}")
+            print(f"[INFO] Anchor TX sent: {tx_hex}")
             
             # Wait for receipt
             receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
@@ -222,7 +222,7 @@ class OnChainVerifier:
             gas_cost_wei = gas_used * gas_price
             gas_cost_eth = float(self.w3.from_wei(gas_cost_wei, 'ether'))
             
-            print(f"✅ Proof anchored in block {receipt['blockNumber']}")
+            print(f"[SUCCESS] Proof anchored in block {receipt['blockNumber']}")
             
             return {
                 "success": True,
@@ -241,7 +241,7 @@ class OnChainVerifier:
             }
             
         except Exception as e:
-            print(f"❌ Anchor proof failed: {e}")
+            print(f"[ERROR] Anchor proof failed: {e}")
             import traceback
             traceback.print_exc()
             return self._simulated_anchor(job_id, proof_hash)
@@ -302,14 +302,14 @@ class OnChainVerifier:
                 "block_number": audit.get("block_number"),
                 "timestamp": audit.get("timestamp"),
                 "auditor": audit.get("auditor"),
-                "message": "✅ Proof verified on-chain" if verified else "❌ Hash mismatch",
+                "message": "[SUCCESS] Proof verified on-chain" if verified else "[ERROR] Hash mismatch",
                 "explorer_url": f"{SHARDEUM_EXPLORER}/address/{CONTRACT_ADDRESS}",
                 "chain": "Shardeum",
                 "simulated": False
             }
             
         except Exception as e:
-            print(f"❌ On-chain verification failed: {e}")
+            print(f"[ERROR] On-chain verification failed: {e}")
             return self._simulated_verify(job_id, proof_hash, True)
     
     async def get_on_chain_audit(self, job_id: str) -> Optional[Dict[str, Any]]:
@@ -334,7 +334,7 @@ class OnChainVerifier:
             }
             
         except Exception as e:
-            print(f"❌ Get audit failed: {e}")
+            print(f"[ERROR] Get audit failed: {e}")
             return None
     
     async def get_total_audits(self) -> int:
@@ -391,7 +391,7 @@ class OnChainVerifier:
             "job_id": job_id,
             "provided_hash": proof_hash,
             "on_chain_hash": proof_hash if verified else "0x0000...different",
-            "message": "✅ Proof verified (simulated)" if verified else "❌ Verification failed (simulated)",
+            "message": "[SUCCESS] Proof verified (simulated)" if verified else "[ERROR] Verification failed (simulated)",
             "chain": "Shardeum",
             "simulated": True,
             "note": "Blockchain connection unavailable - simulating verification"

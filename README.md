@@ -1,204 +1,201 @@
-# V-Inference: Decentralized AI Inference Network
+# 🧠 V-OBLIVION: Decentralized AI Inference & ML Training Platform
 
-A decentralized AI inference network that uses Zero-Knowledge Proofs (ZKML) to ensure accurate computations at a lower cost than centralized cloud providers.
+<div align="center">
 
-![V-Inference](https://img.shields.io/badge/V--Inference-DePIN-6366f1?style=for-the-badge)
-![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
-![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688?style=for-the-badge)
+**AI Inference + ML Training Marketplace on Shardeum**
 
-## 🚀 Overview
+[![Shardeum](https://img.shields.io/badge/Shardeum-8119-00d4aa?style=for-the-badge)](https://shardeum.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Python-009688?style=for-the-badge)](https://fastapi.tiangolo.com/)
+[![ZKML](https://img.shields.io/badge/ZKML-Verified-6366f1?style=for-the-badge)]()
 
-V-Inference creates a marketplace where Zero-Knowledge Proofs serve as a "receipt" for correct AI inference execution. Users can:
+</div>
 
-- **Upload AI Models**: Store and manage ONNX, PyTorch, or TensorFlow models
-- **Run Verified Inference**: Execute inference with ZKML proof generation
-- **Trade on Marketplace**: Sell inference access while keeping model architecture private
-- **Escrow Protection**: Payments released only after cryptographic proof verification
+---
 
-## ✨ Features
+## 🌟 Overview
 
-### ZKML Verification Layer
-Automatically generates SNARK proofs for each inference using simulated EZKL. This ensures providers can't skip layers or falsify outputs.
+**V-OBLIVION** combines the best of V-Inference and OBLIVION to create a fully decentralized platform for:
 
-### Model Privacy
-List models on the marketplace without exposing architecture or weights. Buyers can only use inference, not download models.
+- **🤖 AI Inference**: Run verified AI inference with ZKML proofs
+- **🏋️ ML Training**: Submit training jobs processed by decentralized workers
+- **🛒 Marketplace**: Trade inference access while keeping models private
+- **⛓️ Blockchain**: All transactions anchored on Shardeum
 
-### Automated Escrow
-Smart contract simulation holds funds until ZK proof verification passes. No payment without proof of correct execution.
+## ✨ Key Features
 
-### Premium UI
-Modern glassmorphism design with dark mode, animations, and responsive layout.
+| Feature | Description |
+|---------|-------------|
+| **ZKML Verification** | ZK-SNARK proofs for every inference |
+| **Differential Privacy** | Mathematical privacy guarantees (ε=1.0) |
+| **Decentralized Workers** | Python nodes process jobs trustlessly |
+| **IPFS Storage** | Scripts, datasets, models on Pinata |
+| **Shardeum Network** | Low-cost, high-speed EVM blockchain |
+| **Staking System** | Workers stake collateral for honesty |
 
-## 🛠 Tech Stack
+## 🏗️ Architecture
 
-### Frontend
-- **Next.js 14** (App Router)
-- **Tailwind CSS** with custom design system
-- **TypeScript** for type safety
-
-### Backend
-- **FastAPI** (Python) for orchestration
-- **JSON file storage** (simulating Supabase)
-- **ZKML Simulator** for proof generation
-
-### Blockchain (Simulated)
-- **Base Sepolia** L2 for verification
-- **Escrow contracts** for payment handling
+```
+┌─────────────────────────────────────────────────────────────────┐
+│              SHARDEUM EVM TESTNET (Chain ID: 8119)              │
+│  • VOblivionManager.sol - Jobs, staking, rewards                │
+│  • VInferenceAudit.sol - ZK proof anchoring                     │
+└─────────────────────────────────────────────────────────────────┘
+                           │
+         ┌─────────────────┴─────────────────┐
+         │                                   │
+         ▼                                   ▼
+┌──────────────────────┐      ┌─────────────────────────────┐
+│        IPFS          │      │     DECENTRALIZED WORKERS   │
+│   (Pinata Gateway)   │      │     worker/                 │
+│                      │      │                             │
+│  • Training scripts  │      │  • Polls Shardeum chain     │
+│  • Datasets          │      │  • Runs inference (ZKML)    │
+│  • Trained models    │      │  • Trains models (PyTorch)  │
+│  • ZK proofs         │      │  • Differential privacy     │
+└──────────────────────┘      │  • Quality verification     │
+                              └─────────────────────────────┘
+                                         │
+         ┌───────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────┐      ┌─────────────────────────┐
+│    FASTAPI BACKEND      │      │    NEXT.JS FRONTEND     │
+│    backend/             │      │    frontend/            │
+│                         │      │                         │
+│  • Job orchestration    │      │  • Dashboard            │
+│  • ZKML verification    │      │  • Inference page       │
+│  • API endpoints        │      │  • Training jobs        │
+│  • Marketplace logic    │      │  • Worker management    │
+└─────────────────────────┘      │  • Marketplace          │
+                                 └─────────────────────────┘
+```
 
 ## 📁 Project Structure
 
 ```
-V-inference/
-├── frontend/                 # Next.js 14 App
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── page.tsx           # Landing page
-│   │   │   └── dashboard/
-│   │   │       ├── page.tsx       # Dashboard overview
-│   │   │       ├── models/        # Model management
-│   │   │       ├── inference/     # Run inference
-│   │   │       └── marketplace/   # Buy/sell inference
-│   │   └── lib/
-│   │       └── api.ts             # API client
-│   └── package.json
-│
-├── backend/                  # FastAPI Server
+V-OBLIVION/
+├── backend/                    # FastAPI Server
 │   ├── app/
-│   │   ├── api/
-│   │   │   ├── models.py          # Model endpoints
-│   │   │   ├── inference.py       # Inference endpoints
-│   │   │   ├── marketplace.py     # Marketplace endpoints
-│   │   │   └── users.py           # User endpoints
-│   │   ├── core/
-│   │   │   └── database.py        # JSON storage
-│   │   └── services/
-│   │       └── zkml_simulator.py  # ZKML proof simulation
-│   ├── main.py
-│   └── requirements.txt
+│   │   ├── api/               # REST endpoints
+│   │   ├── core/              # Config, blockchain
+│   │   └── services/          # ZKML, escrow
+│   └── main.py
 │
-└── README.md
+├── worker/                     # Decentralized Worker Node
+│   ├── decentralized_worker.py # Main worker
+│   ├── blockchain_client.py    # Shardeum client
+│   ├── ipfs_client.py         # IPFS/Pinata
+│   ├── privacy.py             # Differential privacy
+│   ├── quality_verification.py # Quality checks
+│   └── zk_proofs.py           # ZK proof generation
+│
+├── frontend/                   # Next.js 16 UI
+│   └── src/app/
+│       ├── dashboard/
+│       │   ├── inference/     # AI inference
+│       │   ├── marketplace/   # Buy/sell models
+│       │   └── models/        # Model management
+│       └── page.tsx
+│
+├── contracts/                  # Solidity contracts
+│   └── VInference_Remix.sol
+│
+└── deploy/                     # Deployment scripts
+    └── deploy_python.py
 ```
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+
-- Python 3.9+
+- Python 3.11+
+- MetaMask with Shardeum SHM
 
-### Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Frontend will be available at `http://localhost:3000`
-
-### Backend Setup
+### 1. Backend Setup
 
 ```bash
 cd backend
 pip install -r requirements.txt
 python main.py
+# API at http://localhost:8000
 ```
 
-Backend API will be available at `http://localhost:8000`
+### 2. Frontend Setup
 
-## 📖 Usage
+```bash
+cd frontend
+npm install
+npm run dev
+# UI at http://localhost:3000
+```
 
-### 1. Upload a Model
+### 3. Worker Setup (Optional)
 
-1. Navigate to Dashboard → My Models
-2. Click "Upload Model"
-3. Drag & drop your model file (ONNX, PyTorch, etc.)
-4. Fill in name, description, and type
-5. Click Upload
+```bash
+cd worker
+pip install -r requirements.txt
+# Edit .env with your Shardeum wallet
+python decentralized_worker.py
+```
 
-### 2. Run Inference
+## 🔗 Contract Addresses (Shardeum)
 
-1. Navigate to Dashboard → Inference
-2. Select a model
-3. Enter or load sample JSON input
-4. Toggle ZKML verification (recommended)
-5. Click "Run Inference"
-6. View results with ZK proof
+| Contract | Address |
+|----------|---------|
+| VInferenceAudit | `0xb3BD0a70eB7eAe91E6F23564d897C8098574e892` |
+| MockUSDC | `0x0117A0EcF95dE28CCc0486D45D5362e020434575` |
 
-### 3. Marketplace
+## 🦊 Add Shardeum to MetaMask
 
-#### List a Model
-1. Go to My Models
-2. Click the marketplace icon on a model
-3. Set price per inference
-4. Submit listing
+| Setting | Value |
+|---------|-------|
+| Network Name | Shardeum EVM Testnet |
+| RPC URL | `https://api-mezame.shardeum.org` |
+| Chain ID | `8119` |
+| Symbol | `SHM` |
+| Explorer | `https://explorer-mezame.shardeum.org` |
 
-#### Purchase Inference
-1. Go to Marketplace
-2. Browse listings
-3. Click "Purchase" on desired model
-4. Select number of inferences
-5. Confirm (funds go to escrow)
-6. Use purchased credits for inference
+## 📖 How It Works
 
-## 🔒 Security Model
+### AI Inference Flow
+1. User submits inference request
+2. Backend generates ZKML proof
+3. Proof is anchored on Shardeum
+4. User receives verified output
 
-### Model Privacy
-- Model weights are never exposed to buyers
-- Only inference input/output is visible
-- Architecture details remain hidden
+### ML Training Flow
+1. Requester creates job with reward
+2. Worker claims job (stakes 50%)
+3. Worker downloads script/data from IPFS
+4. Worker trains with differential privacy
+5. Worker uploads model to IPFS
+6. Worker submits proof on-chain
+7. Smart contract pays worker
 
-### ZKML Verification
-- Every inference generates a ZK-SNARK proof
-- Proofs are verified before payment release
-- Tampered outputs are mathematically detectable
+## 🛠️ Development
 
-### Escrow System
-- Funds locked on purchase
-- Released after proof verification
-- Automatic refund on verification failure
+```bash
+# Backend
+cd backend && python main.py
 
-## 🎨 Design System
+# Frontend
+cd frontend && npm run dev
 
-### Colors
-- **Primary**: Indigo (#6366f1) - Trust & Technology
-- **Secondary**: Emerald (#10b981) - Verification & Success
-- **Accent**: Violet (#8b5cf6) - AI & Innovation
-
-### Components
-- Glassmorphism cards with backdrop blur
-- Gradient buttons with hover animations
-- Real-time status indicators
-
-## 📡 API Endpoints
-
-### Users
-- `POST /api/users/connect` - Connect wallet
-- `GET /api/users/{id}/dashboard` - Get dashboard data
-
-### Models
-- `POST /api/models/upload` - Upload model
-- `GET /api/models/` - List models
-- `DELETE /api/models/{id}` - Delete model
-
-### Inference
-- `POST /api/inference/run` - Run inference
-- `GET /api/inference/job/{id}` - Get job status
-- `POST /api/inference/verify-proof/{id}` - Verify proof
-
-### Marketplace
-- `POST /api/marketplace/list` - Create listing
-- `GET /api/marketplace/listings` - Get listings
-- `POST /api/marketplace/purchase` - Purchase inference
+# Worker
+cd worker && python decentralized_worker.py
+```
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our contributing guidelines before submitting PRs.
+Contributions welcome! Please read our contributing guidelines.
 
 ## 📄 License
 
-MIT License - see LICENSE file for details.
+MIT License
 
 ---
 
-Built with ❤️ by the V-Inference Team
+<div align="center">
+Built with ❤️ by the V-OBLIVION Team
+</div>
